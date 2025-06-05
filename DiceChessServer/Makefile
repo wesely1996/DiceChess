@@ -1,24 +1,21 @@
-CXX := g++
-CXXFLAGS := -Wall -Wextra -O2 -std=c++17
+# Compiler and flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra
 
-# Source files
-SRCS := main.cpp server/server.cpp
+# Source and output
+SRC = main.cpp
+OUT_DIR = build
+TARGET = $(OUT_DIR)/main
 
-# Output binary
-TARGET := server
-
-# Object files (replace .cpp with .o)
-OBJS := $(SRCS:.cpp=.o)
-# Default target
+# Default rule
 all: $(TARGET)
-# Linking
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
-# Compilation
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
-# Clean up
+
+$(TARGET): $(SRC)
+	@mkdir -p $(OUT_DIR)
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+# Clean rule
 clean:
-	rm -f $(TARGET) $(OBJS)
+	@rm -rf $(OUT_DIR)
 
 .PHONY: all clean
